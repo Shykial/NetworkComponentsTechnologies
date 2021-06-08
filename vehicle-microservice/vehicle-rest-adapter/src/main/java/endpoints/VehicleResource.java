@@ -2,7 +2,7 @@ package endpoints;
 
 import java.util.stream.Collectors;
 import dto.VehicleDTO;
-import mappers.VehicleMapper;
+import p.lodz.tul.repositoryAdapter.mappers.VehicleMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;

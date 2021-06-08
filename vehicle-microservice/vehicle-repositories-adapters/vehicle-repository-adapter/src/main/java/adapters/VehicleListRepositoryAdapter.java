@@ -7,7 +7,7 @@ import entities.Vehicle;
 import entities.VehicleEnt;
 import exceptions.VehicleException;
 import lombok.SneakyThrows;
-import mappers.VehicleMapper;
+import p.lodz.tul.repositoryAdapter.mappers.VehicleMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import repo.VehicleRepositoryPort;
