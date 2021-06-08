@@ -1,0 +1,4 @@
+email,login,password,active,levelOfAccess
+jnowak@mail.com,jnowak,P@ssw0rd,1,CLIENT,Jan,Nowak,Piotrkowska 13,Łódź,777888999,1000
+kkowalski@mail.com,kkowalski,P@ssw0rd,0,CLIENT,Krzysztof,Kowalski,Kościuszki 234,Łódź,123456789,1500
+mjanowski@carrent.pl,mjanowski,P@ssw0rd,1,admin,1234
