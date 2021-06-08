@@ -5,8 +5,8 @@
     <packaging>pom</packaging>
     <modules>
         <module>account-application-core</module>
-		<module>account-application-services</module>
 		<module>account-application-ports</module>
+		<module>account-repositories-adapters</module>
 	</modules>
     <parent>
 		<groupId>org.springframework.boot</groupId>
