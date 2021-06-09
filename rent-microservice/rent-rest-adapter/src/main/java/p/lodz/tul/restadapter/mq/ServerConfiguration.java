@@ -16,7 +16,7 @@ public class ServerConfiguration {
 
     @Bean
     public Queue queue() {
-        return new Queue("request");
+        return new Queue(EXCHANGE);
     }
 
     @Bean

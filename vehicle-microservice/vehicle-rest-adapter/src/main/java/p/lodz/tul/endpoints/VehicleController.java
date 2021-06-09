@@ -1,19 +1,10 @@
 package p.lodz.tul.endpoints;
 
-import java.util.List;
-import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import p.lodz.tul.dto.VehicleDTO;
 import p.lodz.tul.mappers.VehicleMapper;
 import p.lodz.tul.mq.StatefulBlockingClient;
@@ -21,6 +12,9 @@ import p.lodz.tul.service.CreateVehicleUseCase;
 import p.lodz.tul.service.GetVehiclesUseCase;
 import p.lodz.tul.service.RemoveVehicleUseCase;
 import p.lodz.tul.service.UpdateVehicleUseCase;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequiredArgsConstructor
@@ -32,11 +26,7 @@ public class VehicleController {
     private final RemoveVehicleUseCase removeVehicleUseCase;
     private final GetVehiclesUseCase getVehiclesUseCase;
     private final StatefulBlockingClient client;
-    //
-    //    @GetMapping("/test-broker")
-    //    public boolean testBroker() {
-    ////            return client.send();
-    //    }
+
 
     @PostMapping(path = "/vehicle", consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Void> addVehicle(@RequestBody VehicleDTO vehicleDTO) {
@@ -59,7 +49,7 @@ public class VehicleController {
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
-    private boolean areVehiclePropertiesNull(@RequestBody VehicleDTO vehicleDTO) {
+    private boolean areVehiclePropertiesNull(VehicleDTO vehicleDTO) {
         return (vehicleDTO.getVin() == null) ||
                 (vehicleDTO.getLicencePlate() == null) ||
                 (vehicleDTO.getManufacturerName() == null) ||
@@ -99,6 +89,6 @@ public class VehicleController {
     public ResponseEntity<Void> updateVehicle(@RequestBody VehicleDTO vehicle) {
         updateVehicleUseCase.updateVehicle(VehicleMapper.toVehicle(vehicle));
         return client.send("update", vehicle) ?
-                ResponseEntity.status(HttpStatus.OK).build() : ResponseEntity.status(HttpStatus.CONFLICT).build(); 
+                ResponseEntity.status(HttpStatus.OK).build() : ResponseEntity.status(HttpStatus.CONFLICT).build();
     }
 }

@@ -3,17 +3,18 @@ package p.lodz.tul.adapters;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
+
+import org.springframework.stereotype.Repository;
 import p.lodz.tul.entities.Vehicle;
 import p.lodz.tul.entities.VehicleEnt;
 import p.lodz.tul.exceptions.VehicleException;
 import lombok.SneakyThrows;
-import p.lodz.tul.mappers.VehicleMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import p.lodz.tul.mappers.VehicleMapper;
 import p.lodz.tul.repo.VehicleRepositoryPort;
 import p.lodz.tul.repository.VehicleRepository;
 
-@Component
+@Repository
 public class VehicleListRepositoryAdapter implements VehicleRepositoryPort {
 
     private final VehicleRepository vehicleRepository;
@@ -35,7 +36,7 @@ public class VehicleListRepositoryAdapter implements VehicleRepositoryPort {
         }
 
         try {
-            vehicleRepository.addVehicle(VehicleMapper.toVehicleEnt(vehicle));
+            vehicleRepository.addVehicle(toVehicleEnt(vehicle));
         } catch (Exception e) {
             throw new VehicleException(VehicleException.VEHICLE_EXISTS);
         }
@@ -49,7 +50,7 @@ public class VehicleListRepositoryAdapter implements VehicleRepositoryPort {
         }
 
         try {
-            vehicleRepository.removeVehicle(VehicleMapper.toVehicleEnt(vehicle));
+            vehicleRepository.removeVehicle(toVehicleEnt(vehicle));
         } catch (Exception e) {
             throw new VehicleException(VehicleException.VEHICLE_NOT_FOUND);
         }
@@ -73,7 +74,7 @@ public class VehicleListRepositoryAdapter implements VehicleRepositoryPort {
         }
 
         try {
-            vehicleRepository.updateVehicle(vin, VehicleMapper.toVehicleEnt(vehicle));
+            vehicleRepository.updateVehicle(vin, toVehicleEnt(vehicle));
         } catch (Exception e) {
             throw new VehicleException(VehicleException.VEHICLE_NOT_FOUND);
         }
@@ -87,7 +88,7 @@ public class VehicleListRepositoryAdapter implements VehicleRepositoryPort {
             throw new VehicleException(VehicleException.VEHICLE_NOT_FOUND);
         }
 
-        return VehicleMapper.toVehicle(vehicleEntOptional.get());
+        return toVehicle(vehicleEntOptional.get());
     }
 
     @Override
@@ -97,6 +98,14 @@ public class VehicleListRepositoryAdapter implements VehicleRepositoryPort {
 
     @Override
     public List<Vehicle> getAllVehicles() {
-        return vehicleRepository.getAllVehicles().stream().map(VehicleMapper::toVehicle).collect(Collectors.toList());
+        return vehicleRepository.getAllVehicles().stream().map(this::toVehicle).collect(Collectors.toList());
+    }
+
+    private Vehicle toVehicle(VehicleEnt vehicleEnt) {
+        return new Vehicle(vehicleEnt.getManufacturerName(), vehicleEnt.getModelName(), vehicleEnt.getBaseLoanPrice(), vehicleEnt.getVin(), vehicleEnt.getLicencePlate());
+    }
+
+    private VehicleEnt toVehicleEnt(Vehicle vehicle) {
+        return new VehicleEnt(vehicle.getManufacturerName(), vehicle.getModelName(), vehicle.getBaseLoanPrice(), vehicle.getVin(), vehicle.getLicencePlate());
     }
 }

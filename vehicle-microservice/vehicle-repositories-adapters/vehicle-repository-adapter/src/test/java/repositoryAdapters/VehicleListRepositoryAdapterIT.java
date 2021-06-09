@@ -6,6 +6,7 @@ import p.lodz.tul.entities.Vehicle;
 import p.lodz.tul.exceptions.VehicleException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import p.lodz.tul.mappers.VehicleMapper;
 import p.lodz.tul.repository.VehicleRepository;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
