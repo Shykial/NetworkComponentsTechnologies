@@ -1,8 +1,8 @@
 package p.lodz.tul.restadapter.mappers;
 
-import p.lodz.tul.DomainModel.Entities.Account;
-import p.lodz.tul.DomainModel.Entities.Address;
-import p.lodz.tul.DomainModel.Entities.accessLevels.Client;
+import p.lodz.tul.domainmodel.entities.Account;
+import p.lodz.tul.domainmodel.entities.Address;
+import p.lodz.tul.domainmodel.entities.accesslevels.Client;
 import p.lodz.tul.restadapter.dto.AccountDTO;
 import p.lodz.tul.restadapter.dto.AddressDTO;
 import p.lodz.tul.restadapter.dto.accessLevels.ClientDTO;

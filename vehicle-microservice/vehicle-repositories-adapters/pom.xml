@@ -10,7 +10,7 @@
     <modelVersion>4.0.0</modelVersion>
     <packaging>pom</packaging>
 
-    <artifactId>vehicle-repositories-p.tul.repositoryadapter.p.tul.repositoryadapter.adapters</artifactId>
+    <artifactId>vehicle-repositories-adapters</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <build>
         <plugins>

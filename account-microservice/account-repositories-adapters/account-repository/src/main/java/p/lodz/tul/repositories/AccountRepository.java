@@ -1,7 +1,7 @@
 package p.lodz.tul.repositories;
 
 
-import p.lodz.tul.dbEntities.AccountEnt;
+import p.lodz.tul.dbentities.AccountEnt;
 import lombok.SneakyThrows;
 import org.springframework.stereotype.Repository;
 

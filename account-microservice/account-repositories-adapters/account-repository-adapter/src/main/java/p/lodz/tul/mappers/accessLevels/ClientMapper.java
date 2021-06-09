@@ -1,7 +1,7 @@
 package p.lodz.tul.mappers.accessLevels;
 
-import p.lodz.tul.DomainModel.Entities.accessLevels.Client;
-import p.lodz.tul.dbEntities.accessLevels.ClientEnt;
+import p.lodz.tul.domainmodel.entities.accesslevels.Client;
+import p.lodz.tul.dbentities.accesslevels.ClientEnt;
 import p.lodz.tul.mappers.AddressMapper;
 
 public class ClientMapper {

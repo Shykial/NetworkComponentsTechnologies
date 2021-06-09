@@ -1,13 +1,13 @@
 package p.lodz.tul.restadapter.mappers;
 
-import p.lodz.tul.DomainModel.Entities.LevelOfAccess;
-import p.lodz.tul.DomainModel.Entities.accessLevels.Admin;
-import p.lodz.tul.DomainModel.Entities.accessLevels.Client;
+import p.lodz.tul.domainmodel.entities.LevelOfAccess;
+import p.lodz.tul.domainmodel.entities.accesslevels.Admin;
+import p.lodz.tul.domainmodel.entities.accesslevels.Client;
 import p.lodz.tul.restadapter.dto.LevelOfAccessDTO;
 import p.lodz.tul.restadapter.dto.accessLevels.AdminDTO;
 import p.lodz.tul.restadapter.dto.accessLevels.ClientDTO;
-import p.lodz.tul.restadapter.mappers.accessLevels.AdminMapper;
-import p.lodz.tul.restadapter.mappers.accessLevels.ClientMapper;
+import p.lodz.tul.restadapter.mappers.accesslevels.AdminMapper;
+import p.lodz.tul.restadapter.mappers.accesslevels.ClientMapper;
 
 public class LevelOfAccessMapper {
 

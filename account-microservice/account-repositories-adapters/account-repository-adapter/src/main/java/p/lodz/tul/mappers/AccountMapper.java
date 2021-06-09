@@ -1,7 +1,7 @@
 package p.lodz.tul.mappers;
 
-import p.lodz.tul.DomainModel.Entities.Account;
-import p.lodz.tul.dbEntities.AccountEnt;
+import p.lodz.tul.domainmodel.entities.Account;
+import p.lodz.tul.dbentities.AccountEnt;
 
 public class AccountMapper {
 

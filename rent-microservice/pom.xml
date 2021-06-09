@@ -10,6 +10,7 @@
         <module>rent-application-core</module>
         <module>rent-application-ports</module>
         <module>rent-repositories-adapters</module>
+        <module>rent-rest-adapter</module>
     </modules>
     <name>RentMicroservice</name>
     <description>Rent microservice</description>

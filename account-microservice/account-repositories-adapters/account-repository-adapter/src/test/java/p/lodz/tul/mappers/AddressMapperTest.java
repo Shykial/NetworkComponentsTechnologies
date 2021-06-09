@@ -1,7 +1,7 @@
 package p.lodz.tul.mappers;
 
-import p.lodz.tul.DomainModel.Entities.Address;
-import p.lodz.tul.dbEntities.AddressEnt;
+import p.lodz.tul.domainmodel.entities.Address;
+import p.lodz.tul.dbentities.AddressEnt;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;

@@ -1,7 +1,7 @@
 package p.lodz.tul.mappers.accessLevels;
 
-import p.lodz.tul.DomainModel.Entities.accessLevels.Admin;
-import p.lodz.tul.dbEntities.accessLevels.AdminEnt;
+import p.lodz.tul.domainmodel.entities.accesslevels.Admin;
+import p.lodz.tul.dbentities.accesslevels.AdminEnt;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;

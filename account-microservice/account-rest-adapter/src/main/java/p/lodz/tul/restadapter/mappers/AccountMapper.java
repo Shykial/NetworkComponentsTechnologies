@@ -1,6 +1,6 @@
 package p.lodz.tul.restadapter.mappers;
 
-import p.lodz.tul.DomainModel.Entities.Account;
+import p.lodz.tul.domainmodel.entities.Account;
 import p.lodz.tul.restadapter.dto.AccountDTO;
 
 public class AccountMapper {

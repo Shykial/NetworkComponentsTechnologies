@@ -1,13 +1,12 @@
 package p.lodz.tul.restadapter.util;
 
-import p.lodz.tul.restadapter.dto.AccountDTO;
-import p.lodz.tul.restadapter.dto.AddressDTO;
-import p.lodz.tul.restadapter.dto.accessLevels.ClientDTO;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.SneakyThrows;
 import org.json.JSONObject;
 import org.springframework.stereotype.Component;
+import p.lodz.tul.restadapter.dto.AccountDTO;
+import p.lodz.tul.restadapter.dto.AddressDTO;
+import p.lodz.tul.restadapter.dto.accessLevels.ClientDTO;
 
 import javax.annotation.PostConstruct;
 import java.io.Serializable;
@@ -22,7 +21,7 @@ public class ClientAccountDeserializer implements Serializable {
         objectMapper = new ObjectMapper();
     }
 
-    public AccountDTO fromJson(JSONObject jsonData) throws JsonProcessingException {
+    public AccountDTO fromJson(JSONObject jsonData) {
         JSONObject levelOfAccessObject = jsonData.getJSONObject("levelOfAccess");
         AddressDTO addressDTO = extractAddressFromJson(levelOfAccessObject);
 

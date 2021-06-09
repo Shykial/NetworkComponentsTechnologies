@@ -1,10 +1,10 @@
 package p.lodz.tul.repositories;
 
-import p.lodz.tul.dbEntities.AccountEnt;
-import p.lodz.tul.dbEntities.AddressEnt;
-import p.lodz.tul.dbEntities.LevelOfAccessEnt;
-import p.lodz.tul.dbEntities.accessLevels.AdminEnt;
-import p.lodz.tul.dbEntities.accessLevels.ClientEnt;
+import p.lodz.tul.dbentities.AccountEnt;
+import p.lodz.tul.dbentities.AddressEnt;
+import p.lodz.tul.dbentities.LevelOfAccessEnt;
+import p.lodz.tul.dbentities.accesslevels.AdminEnt;
+import p.lodz.tul.dbentities.accesslevels.ClientEnt;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ParameterContext;

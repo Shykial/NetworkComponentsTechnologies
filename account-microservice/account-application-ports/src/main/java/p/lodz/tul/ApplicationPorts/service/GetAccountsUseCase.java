@@ -1,6 +1,6 @@
 package p.lodz.tul.ApplicationPorts.service;
 
-import p.lodz.tul.DomainModel.Entities.Account;
+import p.lodz.tul.domainmodel.entities.Account;
 
 import java.util.List;
 

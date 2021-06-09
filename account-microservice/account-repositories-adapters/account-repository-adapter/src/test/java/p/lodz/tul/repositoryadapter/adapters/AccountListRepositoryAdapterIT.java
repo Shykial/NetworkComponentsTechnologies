@@ -3,9 +3,9 @@ package p.lodz.tul.repositoryadapter.adapters;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import p.lodz.tul.DomainModel.Entities.Account;
-import p.lodz.tul.DomainModel.Entities.accessLevels.Admin;
-import p.lodz.tul.DomainModel.Exceptions.AccountException;
+import p.lodz.tul.domainmodel.entities.Account;
+import p.lodz.tul.domainmodel.entities.accesslevels.Admin;
+import p.lodz.tul.domainmodel.exceptions.AccountException;
 import p.lodz.tul.repositories.AccountRepository;
 
 import java.util.List;

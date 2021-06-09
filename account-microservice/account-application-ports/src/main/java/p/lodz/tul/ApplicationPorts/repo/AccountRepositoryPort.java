@@ -1,7 +1,7 @@
 package p.lodz.tul.ApplicationPorts.repo;
 
-import p.lodz.tul.DomainModel.Entities.Account;
-import p.lodz.tul.DomainModel.Exceptions.AccountException;
+import p.lodz.tul.domainmodel.entities.Account;
+import p.lodz.tul.domainmodel.exceptions.AccountException;
 
 import java.util.List;
 

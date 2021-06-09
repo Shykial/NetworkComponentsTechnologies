@@ -1,6 +1,6 @@
 package p.lodz.tul.restadapter.mappers;
 
-import p.lodz.tul.DomainModel.Entities.Address;
+import p.lodz.tul.domainmodel.entities.Address;
 import p.lodz.tul.restadapter.dto.AddressDTO;
 
 public class AddressMapper {

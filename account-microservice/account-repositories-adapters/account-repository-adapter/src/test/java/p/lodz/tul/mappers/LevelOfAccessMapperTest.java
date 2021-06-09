@@ -1,10 +1,10 @@
 package p.lodz.tul.mappers;
 
-import p.lodz.tul.DomainModel.Entities.Address;
-import p.lodz.tul.DomainModel.Entities.LevelOfAccess;
-import p.lodz.tul.DomainModel.Entities.accessLevels.Client;
-import p.lodz.tul.dbEntities.LevelOfAccessEnt;
-import p.lodz.tul.dbEntities.accessLevels.AdminEnt;
+import p.lodz.tul.domainmodel.entities.Address;
+import p.lodz.tul.domainmodel.entities.LevelOfAccess;
+import p.lodz.tul.domainmodel.entities.accesslevels.Client;
+import p.lodz.tul.dbentities.LevelOfAccessEnt;
+import p.lodz.tul.dbentities.accesslevels.AdminEnt;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;

@@ -1,6 +1,5 @@
 package p.lodz.tul.restadapter.endpoints;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import lombok.extern.java.Log;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,11 +43,7 @@ public class AccountController {
     public ResponseEntity<Void> registerClient(JSONObject accountDtoJson) {
         AccountDTO accountDTO;
 
-        try {
-            accountDTO = jsonDeserializer.fromJson(accountDtoJson);
-        } catch (JsonProcessingException e) {
-            return ResponseEntity.status(UNSUPPORTED_MEDIA_TYPE).build();
-        }
+        accountDTO = jsonDeserializer.fromJson(accountDtoJson);
 
         if (areAccountPropertiesNull(accountDTO)) {
             return ResponseEntity.status(EXPECTATION_FAILED).build();
@@ -105,11 +100,7 @@ public class AccountController {
     public ResponseEntity<Void> updateAccount(JSONObject accountDtoJson) {
         AccountDTO accountDTO;
 
-        try {
-            accountDTO = jsonDeserializer.fromJson(accountDtoJson);
-        } catch (JsonProcessingException e) {
-            return ResponseEntity.status(UNSUPPORTED_MEDIA_TYPE).build();
-        }
+        accountDTO = jsonDeserializer.fromJson(accountDtoJson);
 
         if (areAccountPropertiesNull(accountDTO)) {
             return ResponseEntity.status(EXPECTATION_FAILED).build();
