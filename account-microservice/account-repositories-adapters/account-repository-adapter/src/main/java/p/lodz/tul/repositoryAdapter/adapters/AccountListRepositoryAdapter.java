@@ -8,7 +8,7 @@ import p.lodz.tul.DomainModel.Entities.accessLevels.Client;
 import p.lodz.tul.DomainModel.Exceptions.AccountException;
 import p.lodz.tul.dbEntities.AccountEnt;
 import lombok.SneakyThrows;
-import p.lodz.tul.repositoryAdapter.mappers.AccountMapper;
+import p.lodz.tul.mappers.AccountMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import p.lodz.tul.repositories.AccountRepository;
