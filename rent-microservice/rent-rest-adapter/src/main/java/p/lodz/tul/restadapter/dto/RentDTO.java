@@ -20,7 +20,7 @@ public class RentDTO implements Serializable {
 
     private final AccountDTO accountDTO;
 
-    private final VehicleDTO vehicleDTO;
+    private final CarDTO carDTO;
 
     @Setter
     private LocalDateTime startDate;

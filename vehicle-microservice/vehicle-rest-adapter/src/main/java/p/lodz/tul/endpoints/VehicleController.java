@@ -2,9 +2,7 @@ package p.lodz.tul.endpoints;
 
 import java.util.List;
 import java.util.stream.Collectors;
-import p.lodz.tul.dto.VehicleDTO;
-import p.lodz.tul.mappers.VehicleMapper;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -16,12 +14,16 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import p.lodz.tul.dto.VehicleDTO;
+import p.lodz.tul.mappers.VehicleMapper;
+import p.lodz.tul.mq.StatefulBlockingClient;
 import p.lodz.tul.service.CreateVehicleUseCase;
 import p.lodz.tul.service.GetVehiclesUseCase;
 import p.lodz.tul.service.RemoveVehicleUseCase;
 import p.lodz.tul.service.UpdateVehicleUseCase;
 
 @RestController
+@RequiredArgsConstructor
 @RequestMapping("/api/vehicles")
 public class VehicleController {
 
@@ -29,17 +31,12 @@ public class VehicleController {
     private final UpdateVehicleUseCase updateVehicleUseCase;
     private final RemoveVehicleUseCase removeVehicleUseCase;
     private final GetVehiclesUseCase getVehiclesUseCase;
-
-    @Autowired
-    public VehicleController(CreateVehicleUseCase createVehicleUseCase,
-                             UpdateVehicleUseCase updateVehicleUseCase,
-                             RemoveVehicleUseCase removeVehicleUseCase,
-                             GetVehiclesUseCase getVehiclesUseCase) {
-        this.createVehicleUseCase = createVehicleUseCase;
-        this.updateVehicleUseCase = updateVehicleUseCase;
-        this.removeVehicleUseCase = removeVehicleUseCase;
-        this.getVehiclesUseCase = getVehiclesUseCase;
-    }
+    private final StatefulBlockingClient client;
+    //
+    //    @GetMapping("/test-broker")
+    //    public boolean testBroker() {
+    ////            return client.send();
+    //    }
 
     @PostMapping(path = "/vehicle", consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Void> addVehicle(@RequestBody VehicleDTO vehicleDTO) {
@@ -54,6 +51,11 @@ public class VehicleController {
                 vehicleDTO.getVin(),
                 vehicleDTO.getLicencePlate()
         );
+
+        if (!client.send("create", vehicleDTO)) {
+            return ResponseEntity.status(HttpStatus.CONFLICT).build();
+        }
+
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
@@ -96,6 +98,7 @@ public class VehicleController {
     @PutMapping(path = "/vehicle", consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Void> updateVehicle(@RequestBody VehicleDTO vehicle) {
         updateVehicleUseCase.updateVehicle(VehicleMapper.toVehicle(vehicle));
-        return ResponseEntity.status(HttpStatus.OK).build();
+        return client.send("update", vehicle) ?
+                ResponseEntity.status(HttpStatus.OK).build() : ResponseEntity.status(HttpStatus.CONFLICT).build(); 
     }
 }

@@ -4,7 +4,7 @@ import p.lodz.tul.domainmodel.entities.Car;
 
 import java.util.List;
 
-public interface GetVehiclesUseCase {
-    Car getVehicle(String vin);
-    List<Car> getAllVehicles();
+public interface GetCarsUseCase {
+    Car getCar(String vin);
+    List<Car> getAllCars();
 }

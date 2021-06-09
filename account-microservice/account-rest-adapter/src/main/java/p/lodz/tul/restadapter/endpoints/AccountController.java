@@ -1,8 +1,10 @@
 package p.lodz.tul.restadapter.endpoints;
 
+import lombok.RequiredArgsConstructor;
 import lombok.extern.java.Log;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -13,6 +15,7 @@ import p.lodz.tul.ApplicationPorts.service.UpdateAccountUseCase;
 import p.lodz.tul.restadapter.dto.AccountDTO;
 import p.lodz.tul.restadapter.mappers.AccountMapper;
 import p.lodz.tul.restadapter.mappers.LevelOfAccessMapper;
+import p.lodz.tul.restadapter.mq.StatefulBlockingClient;
 import p.lodz.tul.restadapter.util.ClientAccountDeserializer;
 
 import java.util.List;
@@ -22,6 +25,7 @@ import static org.springframework.http.HttpStatus.*;
 
 @Log
 @RestController
+@RequiredArgsConstructor
 @RequestMapping("/api/accounts")
 public class AccountController {
     private final GetAccountsUseCase getAccountsUseCase;
@@ -29,15 +33,8 @@ public class AccountController {
     private final UpdateAccountUseCase updateAccountUseCase;
     private final RemoveAccountUseCase removeAccountUseCase;
     private final ClientAccountDeserializer jsonDeserializer;
-
-    @Autowired
-    public AccountController(GetAccountsUseCase getAccountsUseCase, CreateAccountUseCase createAccountUseCase, UpdateAccountUseCase updateAccountUseCase, RemoveAccountUseCase removeAccountUseCase, ClientAccountDeserializer jsonDeserializer) {
-        this.getAccountsUseCase = getAccountsUseCase;
-        this.createAccountUseCase = createAccountUseCase;
-        this.updateAccountUseCase = updateAccountUseCase;
-        this.removeAccountUseCase = removeAccountUseCase;
-        this.jsonDeserializer = jsonDeserializer;
-    }
+    private final StatefulBlockingClient client;
+    
 
     @PostMapping(value = "/account", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Void> registerClient(JSONObject accountDtoJson) {
@@ -55,6 +52,11 @@ public class AccountController {
                 accountDTO.getPassword(),
                 LevelOfAccessMapper.toLevelOfAccess(accountDTO.getLevelOfAccess())
         );
+        
+        if (!client.send("create", accountDTO)) {
+            return ResponseEntity.status(CONFLICT).build();
+        }
+        
         return ResponseEntity.status(CREATED).build();
     }
 
@@ -90,6 +92,9 @@ public class AccountController {
     public ResponseEntity<Void> removeAccount(@PathVariable("accountLogin") String accountLogin) {
         try {
             removeAccountUseCase.removeAccount(accountLogin);
+            if (!client.send("remove", accountLogin)) {
+                return ResponseEntity.status(NOT_ACCEPTABLE).build();
+            }
             return ResponseEntity.status(CREATED).build();
         } catch (Exception e) {
             return ResponseEntity.status(CONFLICT).build();
@@ -104,6 +109,10 @@ public class AccountController {
 
         if (areAccountPropertiesNull(accountDTO)) {
             return ResponseEntity.status(EXPECTATION_FAILED).build();
+        }
+        
+        if (!client.send("update", accountDTO)) {
+            return ResponseEntity.status(NOT_ACCEPTABLE).build();
         }
 
         updateAccountUseCase.updateAccount(AccountMapper.toAccount(accountDTO));

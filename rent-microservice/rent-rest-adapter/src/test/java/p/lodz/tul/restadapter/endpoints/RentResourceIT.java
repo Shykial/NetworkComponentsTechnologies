@@ -8,8 +8,8 @@ import lombok.SneakyThrows;
 import org.json.JSONObject;
 import org.junit.jupiter.api.Test;
 import p.lodz.tul.restadapter.dto.AccountDTO;
+import p.lodz.tul.restadapter.dto.CarDTO;
 import p.lodz.tul.restadapter.dto.RentDTO;
-import p.lodz.tul.restadapter.dto.VehicleDTO;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -31,13 +31,13 @@ class RentResourceIT {
         RentDTO rent = getRandomUUIDRent();
         JSONObject jsonObject = new JSONObject(Map.of(
                 "account", rent.getAccountDTO().getLogin(),
-                "vehicle", rent.getVehicleDTO().getVin(),
+                "vehicle", rent.getCarDTO().getVin(),
                 "startDate", rent.getStartDate(),
                 "endDate", rent.getEndDate()
         ));
 
         registerClient(rent.getAccountDTO());
-        registerVehicle(rent.getVehicleDTO());
+        registerVehicle(rent.getCarDTO());
 
         Response response = given().get("http://localhost:8080/car-rent/api/rents/" + rent.getUuid().toString());
         assertEquals(404, response.getStatusCode());
@@ -69,7 +69,7 @@ class RentResourceIT {
     void updateRentTest() {
         RentDTO rent = getRandomUUIDRent();
         String rentUUID = registerRent(rent);
-        rent = new RentDTO(UUID.fromString(rentUUID), rent.getAccountDTO(), rent.getVehicleDTO(), rent.getStartDate(), rent.getEndDate());
+        rent = new RentDTO(UUID.fromString(rentUUID), rent.getAccountDTO(), rent.getCarDTO(), rent.getStartDate(), rent.getEndDate());
 
         Response response = given().get("http://localhost:8080/car-rent/api/rents/" + rentUUID);
         assertEquals(rent.getEndDate(), LocalDateTime.parse(response.getBody().jsonPath().getString("endDate")));
@@ -92,7 +92,7 @@ class RentResourceIT {
         RentDTO rent = getRandomUUIDRent();
         rent.setEndDate(null);
         String rentUUID = registerRent(rent);
-        rent = new RentDTO(UUID.fromString(rentUUID), rent.getAccountDTO(), rent.getVehicleDTO(), rent.getStartDate(), rent.getEndDate());
+        rent = new RentDTO(UUID.fromString(rentUUID), rent.getAccountDTO(), rent.getCarDTO(), rent.getStartDate(), rent.getEndDate());
         JSONObject rentJSONObject = getJSONFromRent(rent);
         rentJSONObject.remove("endDate"); //removing endDate as it will differ from outcome
 
@@ -114,7 +114,7 @@ class RentResourceIT {
 
     private RentDTO getRandomUUIDRent() {
         return RentDTO.builder().accountDTO(getRandomLoginAccount())
-                .vehicleDTO(getRandomVinVehicle())
+                .carDTO(getRandomVinVehicle())
                 .startDate(LocalDate.parse("2020-12-12", dateTimeFormatter).atStartOfDay())
                 .endDate(LocalDateTime.now()).build();
     }
@@ -123,15 +123,15 @@ class RentResourceIT {
         return new AccountDTO("michal@gmail.com", randomAlphanumeric(8), true, 9999999.12);
     }
 
-    private VehicleDTO getRandomVinVehicle() {
-        return new VehicleDTO(999.12, randomAlphanumeric(12));
+    private CarDTO getRandomVinVehicle() {
+        return new CarDTO(999.12, randomAlphanumeric(12));
     }
 
     private String registerRent(RentDTO rent) {
         JSONObject jsonObject = getJSONFromRent(rent);
 
         registerClient(rent.getAccountDTO());
-        registerVehicle(rent.getVehicleDTO());
+        registerVehicle(rent.getCarDTO());
 
         Response response = given().contentType(ContentType.JSON).body(jsonObject.toString())
                 .post("http://localhost:8080/car-rent/api/rents/rent");
@@ -147,7 +147,7 @@ class RentResourceIT {
     }
 
     @SneakyThrows
-    private void registerVehicle(VehicleDTO vehicle) {
+    private void registerVehicle(CarDTO vehicle) {
         given().contentType(ContentType.JSON).body(objectMapper.writeValueAsString(vehicle))
                 .post("http://localhost:8080/car-rent/api/vehicles/vehicle");
     }
@@ -157,7 +157,7 @@ class RentResourceIT {
         return new JSONObject(Map.of(
                 "uuid", JSONObject.wrap(rent.getUuid()),
                 "account", JSONObject.wrap(rent.getAccountDTO().getLogin()),
-                "vehicle", JSONObject.wrap(rent.getVehicleDTO().getVin()),
+                "vehicle", JSONObject.wrap(rent.getCarDTO().getVin()),
                 "startDate", JSONObject.wrap(rent.getStartDate()),
                 "endDate", JSONObject.wrap(rent.getEndDate())
         ));

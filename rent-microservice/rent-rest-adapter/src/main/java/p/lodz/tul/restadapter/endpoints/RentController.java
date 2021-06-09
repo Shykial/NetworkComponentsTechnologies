@@ -1,7 +1,7 @@
 package p.lodz.tul.restadapter.endpoints;
 
+import lombok.RequiredArgsConstructor;
 import org.json.JSONObject;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -11,8 +11,8 @@ import p.lodz.tul.applicationports.service.GetRentsUseCase;
 import p.lodz.tul.applicationports.service.UpdateRentUseCase;
 import p.lodz.tul.restadapter.dto.RentDTO;
 import p.lodz.tul.restadapter.mappers.AccountMapper;
+import p.lodz.tul.restadapter.mappers.CarMapper;
 import p.lodz.tul.restadapter.mappers.RentMapper;
-import p.lodz.tul.restadapter.mappers.VehicleMapper;
 
 import java.util.List;
 import java.util.Map;
@@ -22,6 +22,7 @@ import java.util.stream.Collectors;
 import static org.springframework.http.HttpStatus.*;
 
 @RestController
+@RequiredArgsConstructor
 @RequestMapping("/api/rents")
 public class RentController {
     private final CreateRentUseCase createRentUseCase;
@@ -29,17 +30,9 @@ public class RentController {
     private final GetRentsUseCase getRentsUseCase;
     private final EndRentUseCase endRentUseCase;
 
-    @Autowired
-    public RentController(CreateRentUseCase createRentUseCase, UpdateRentUseCase updateRentUseCase, GetRentsUseCase getRentsUseCase, EndRentUseCase endRentUseCase) {
-        this.createRentUseCase = createRentUseCase;
-        this.updateRentUseCase = updateRentUseCase;
-        this.getRentsUseCase = getRentsUseCase;
-        this.endRentUseCase = endRentUseCase;
-    }
-
     @PostMapping(value = "/rent", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.TEXT_PLAIN_VALUE)
     public ResponseEntity<String> addRent(RentDTO rent) {
-        if (rent.getAccountDTO() == null || rent.getVehicleDTO() == null) {
+        if (rent.getAccountDTO() == null || rent.getCarDTO() == null) {
             return ResponseEntity.status(EXPECTATION_FAILED).build();
         }
 
@@ -109,7 +102,7 @@ public class RentController {
         return new JSONObject(Map.of(
                 "uuid", JSONObject.wrap(rent.getUuid()),
                 "account", JSONObject.wrap(rent.getAccountDTO().getLogin()),
-                "vehicle", JSONObject.wrap(rent.getVehicleDTO().getVin()),
+                "vehicle", JSONObject.wrap(rent.getCarDTO().getVin()),
                 "startDate", JSONObject.wrap(rent.getStartDate()),
                 "endDate", JSONObject.wrap(rent.getEndDate())
         ));
@@ -118,28 +111,28 @@ public class RentController {
     private UUID createNotStartedRentAndGetUUID(RentDTO rent) {
         return createRentUseCase.createRent(
                 AccountMapper.toAccount(rent.getAccountDTO()),
-                VehicleMapper.toVehicle(rent.getVehicleDTO())
+                CarMapper.toCar(rent.getCarDTO())
         ).getUuid();
     }
 
     private UUID createStartedRentAndGetUUID(RentDTO rent) {
         return createRentUseCase.createRent(
                 AccountMapper.toAccount(rent.getAccountDTO()),
-                VehicleMapper.toVehicle(rent.getVehicleDTO()), rent.getStartDate()
+                CarMapper.toCar(rent.getCarDTO()), rent.getStartDate()
         ).getUuid();
     }
 
     private UUID createFinishedRentAndGetUUID(RentDTO rent) {
         return createRentUseCase.createRent(
                 AccountMapper.toAccount(rent.getAccountDTO()),
-                VehicleMapper.toVehicle(rent.getVehicleDTO()),
+                CarMapper.toCar(rent.getCarDTO()),
                 rent.getStartDate(), rent.getEndDate()
         ).getUuid();
     }
 
 //    private RentDTO getRentFromJSON(JsonObject rentJSON) {
 //        AccountDTO account = AccountMapper.toAccountDTO(getAccountsUseCase.getAccount(rentJSON.getString("account")));
-//        VehicleDTO vehicle = VehicleMapper.toVehicleDTO(getVehiclesUseCase.getVehicle(rentJSON.getString("vehicle")));
+//        CarDTO vehicle = CarMapper.toVehicleDTO(getVehiclesUseCase.getVehicle(rentJSON.getString("vehicle")));
 //
 //        if (rentJSON.containsKey("uuid")) {
 //            LocalDateTime startDate = rentJSON.isNull("startDate") ? null : LocalDateTime.parse(rentJSON.getString("startDate"));
