@@ -3,6 +3,7 @@ package mappers;
 import p.lodz.tul.entities.Vehicle;
 import p.lodz.tul.entities.VehicleEnt;
 import org.junit.jupiter.api.Test;
+import p.lodz.tul.mappers.VehicleMapper;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 

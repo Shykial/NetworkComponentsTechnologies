@@ -23,7 +23,7 @@ import p.lodz.tul.service.UpdateVehicleUseCase;
 
 @RestController
 @RequestMapping("/api/vehicles")
-public class VehicleResource {
+public class VehicleController {
 
     private final CreateVehicleUseCase createVehicleUseCase;
     private final UpdateVehicleUseCase updateVehicleUseCase;
@@ -31,10 +31,10 @@ public class VehicleResource {
     private final GetVehiclesUseCase getVehiclesUseCase;
 
     @Autowired
-    public VehicleResource(CreateVehicleUseCase createVehicleUseCase, 
-                           UpdateVehicleUseCase updateVehicleUseCase, 
-                           RemoveVehicleUseCase removeVehicleUseCase, 
-                           GetVehiclesUseCase getVehiclesUseCase) {
+    public VehicleController(CreateVehicleUseCase createVehicleUseCase,
+                             UpdateVehicleUseCase updateVehicleUseCase,
+                             RemoveVehicleUseCase removeVehicleUseCase,
+                             GetVehiclesUseCase getVehiclesUseCase) {
         this.createVehicleUseCase = createVehicleUseCase;
         this.updateVehicleUseCase = updateVehicleUseCase;
         this.removeVehicleUseCase = removeVehicleUseCase;

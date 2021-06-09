@@ -21,8 +21,7 @@ import java.util.stream.Collectors;
 @Service
 public class RentService implements CreateRentUseCase, EndRentUseCase, UpdateRentUseCase, GetRentsUseCase {
 
-    private RentRepositoryPort rentRepository;
-
+    private final RentRepositoryPort rentRepository;
 
     @Autowired
     public RentService(RentRepositoryPort rentRepository) {

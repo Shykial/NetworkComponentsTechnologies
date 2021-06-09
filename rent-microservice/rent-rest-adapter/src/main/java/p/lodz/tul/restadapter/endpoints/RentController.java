@@ -22,6 +22,7 @@ import java.util.stream.Collectors;
 import static org.springframework.http.HttpStatus.*;
 
 @RestController
+@RequestMapping("/api/rents")
 public class RentController {
     private final CreateRentUseCase createRentUseCase;
     private final UpdateRentUseCase updateRentUseCase;

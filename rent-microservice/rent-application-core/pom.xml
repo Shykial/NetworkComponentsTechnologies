@@ -13,6 +13,7 @@
     <packaging>pom</packaging>
     <modules>
         <module>rent-domain-model</module>
+        <module>rent-application-services</module>
     </modules>
 
     <properties>

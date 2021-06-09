@@ -1,6 +1,7 @@
 package p.lodz.tul.repositoryadapter.adapters;
 
 import lombok.SneakyThrows;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import p.lodz.tul.applicationports.repo.ClientRepositoryPort;
 import p.lodz.tul.dbentities.AccountEnt;
@@ -9,7 +10,6 @@ import p.lodz.tul.domainmodel.exceptions.AccountException;
 import p.lodz.tul.repositories.ClientRepository;
 import p.lodz.tul.repositoryadapter.mappers.AccountMapper;
 
-import javax.inject.Inject;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
@@ -20,7 +20,7 @@ public class ClientListRepositoryAdapter implements ClientRepositoryPort {
 
     private final ClientRepository accountRepository;
 
-    @Inject
+    @Autowired
     public ClientListRepositoryAdapter(ClientRepository accountRepository) {
         this.accountRepository = accountRepository;
     }

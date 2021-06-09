@@ -22,7 +22,7 @@ import static org.springframework.http.HttpStatus.*;
 
 @Log
 @RestController
-@RequestMapping("/accounts")
+@RequestMapping("/api/accounts")
 public class AccountController {
     private final GetAccountsUseCase getAccountsUseCase;
     private final CreateAccountUseCase createAccountUseCase;

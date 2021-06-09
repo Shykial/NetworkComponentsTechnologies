@@ -2,7 +2,8 @@ package p.lodz.tul.services;
 
 import java.util.Arrays;
 import java.util.List;
-import p.lodz.tul.VehicleListRepositoryAdapter;
+
+import p.lodz.tul.adapters.VehicleListRepositoryAdapter;
 import p.lodz.tul.entities.Vehicle;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

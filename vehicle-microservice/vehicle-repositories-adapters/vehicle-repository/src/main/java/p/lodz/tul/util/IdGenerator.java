@@ -2,11 +2,7 @@ package p.lodz.tul.util;
 
 public class IdGenerator {
 
-    private Long id;
-
-    public IdGenerator() {
-        id = 0L;
-    }
+    private long id;
 
     public Long nextId() {
         return ++id;

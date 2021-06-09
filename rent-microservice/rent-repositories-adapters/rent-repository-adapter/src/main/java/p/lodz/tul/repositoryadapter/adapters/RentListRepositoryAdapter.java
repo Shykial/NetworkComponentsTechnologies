@@ -1,6 +1,7 @@
 package p.lodz.tul.repositoryadapter.adapters;
 
 import lombok.SneakyThrows;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import p.lodz.tul.applicationports.repo.RentRepositoryPort;
 import p.lodz.tul.domainmodel.entities.Rent;
@@ -8,7 +9,6 @@ import p.lodz.tul.domainmodel.exceptions.RentException;
 import p.lodz.tul.repositories.RentRepository;
 import p.lodz.tul.repositoryadapter.mappers.RentMapper;
 
-import javax.inject.Inject;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -17,7 +17,7 @@ import java.util.stream.Collectors;
 public class RentListRepositoryAdapter implements RentRepositoryPort {
     final RentRepository rentRepository;
 
-    @Inject
+    @Autowired
     public RentListRepositoryAdapter(RentRepository rentRepository) {
         this.rentRepository = rentRepository;
     }
