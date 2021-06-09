@@ -1,7 +1,7 @@
-package p.lodz.tul.RestAdapter.mappers;
+package p.lodz.tul.restadapter.mappers;
 
 import p.lodz.tul.DomainModel.Entities.Account;
-import p.lodz.tul.RestAdapter.dto.AccountDTO;
+import p.lodz.tul.restadapter.dto.AccountDTO;
 
 public class AccountMapper {
 

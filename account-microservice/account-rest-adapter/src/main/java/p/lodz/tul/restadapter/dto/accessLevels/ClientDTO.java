@@ -1,7 +1,7 @@
-package p.lodz.tul.RestAdapter.dto.accessLevels;
+package p.lodz.tul.restadapter.dto.accessLevels;
 
-import p.lodz.tul.RestAdapter.dto.AddressDTO;
-import p.lodz.tul.RestAdapter.dto.LevelOfAccessDTO;
+import p.lodz.tul.restadapter.dto.AddressDTO;
+import p.lodz.tul.restadapter.dto.LevelOfAccessDTO;
 import lombok.Getter;
 import lombok.Setter;
 

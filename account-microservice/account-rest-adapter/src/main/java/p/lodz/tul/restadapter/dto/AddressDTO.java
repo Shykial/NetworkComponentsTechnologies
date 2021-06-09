@@ -1,4 +1,4 @@
-package p.lodz.tul.RestAdapter.dto;
+package p.lodz.tul.restadapter.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

@@ -1,10 +1,10 @@
-package p.lodz.tul.RestAdapter.mappers.accessLevels;
+package p.lodz.tul.restadapter.mappers.accessLevels;
 
 import p.lodz.tul.DomainModel.Entities.Address;
 import p.lodz.tul.DomainModel.Entities.accessLevels.Client;
-import p.lodz.tul.RestAdapter.dto.AddressDTO;
-import p.lodz.tul.RestAdapter.dto.accessLevels.ClientDTO;
-import p.lodz.tul.RestAdapter.mappers.AddressMapper;
+import p.lodz.tul.restadapter.dto.AddressDTO;
+import p.lodz.tul.restadapter.dto.accessLevels.ClientDTO;
+import p.lodz.tul.restadapter.mappers.AddressMapper;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;

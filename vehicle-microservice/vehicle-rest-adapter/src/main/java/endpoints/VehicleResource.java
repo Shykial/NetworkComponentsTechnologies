@@ -1,5 +1,6 @@
 package endpoints;
 
+import java.util.List;
 import java.util.stream.Collectors;
 import dto.VehicleDTO;
 import p.lodz.tul.repositoryAdapter.mappers.VehicleMapper;
@@ -41,7 +42,7 @@ public class VehicleResource {
     }
 
     @PostMapping(path = "/vehicle", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> addVehicle(@RequestBody VehicleDTO vehicleDTO) {
+    public ResponseEntity<Void> addVehicle(@RequestBody VehicleDTO vehicleDTO) {
         if (areVehiclePropertiesNull(vehicleDTO)) {
             return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).build();
         }
@@ -64,7 +65,7 @@ public class VehicleResource {
     }
 
     @GetMapping(path = "{vehicleVin}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> vehicleByVin(@PathVariable("vehicleVin") String vehicleVin) {
+    public ResponseEntity<VehicleDTO> vehicleByVin(@PathVariable("vehicleVin") String vehicleVin) {
         try {
             return ResponseEntity.ok().body(VehicleMapper.toVehicleDTO(getVehiclesUseCase.getVehicle(vehicleVin)));
         } catch (Exception e) {
@@ -73,7 +74,7 @@ public class VehicleResource {
     }
 
     @GetMapping(path = "/all", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> allVehicles() {
+    public ResponseEntity<List<VehicleDTO>> allVehicles() {
         try {
             return ResponseEntity.ok().body(getVehiclesUseCase.getAllVehicles().stream()
                     .map(VehicleMapper::toVehicleDTO).collect(Collectors.toList()));
@@ -83,7 +84,7 @@ public class VehicleResource {
     }
 
     @DeleteMapping(path = "{vehicleVin}")
-    public ResponseEntity<?> removeVehicle(@PathVariable("vehicleVin") String vehicleVin) {
+    public ResponseEntity<Void> removeVehicle(@PathVariable("vehicleVin") String vehicleVin) {
         try {
             removeVehicleUseCase.removeVehicle(vehicleVin);
             return ResponseEntity.status(HttpStatus.OK).build();
@@ -93,7 +94,7 @@ public class VehicleResource {
     }
 
     @PutMapping(path = "/vehicle", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> updateVehicle(@RequestBody VehicleDTO vehicle) {
+    public ResponseEntity<Void> updateVehicle(@RequestBody VehicleDTO vehicle) {
         updateVehicleUseCase.updateVehicle(VehicleMapper.toVehicle(vehicle));
         return ResponseEntity.status(HttpStatus.OK).build();
     }

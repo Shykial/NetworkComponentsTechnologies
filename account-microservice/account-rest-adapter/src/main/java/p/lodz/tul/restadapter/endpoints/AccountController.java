@@ -1,22 +1,22 @@
-package p.lodz.tul.RestAdapter.endpoints;
+package p.lodz.tul.restadapter.endpoints;
 
-import p.lodz.tul.ApplicationPorts.service.CreateAccountUseCase;
-import p.lodz.tul.ApplicationPorts.service.GetAccountsUseCase;
-import p.lodz.tul.ApplicationPorts.service.RemoveAccountUseCase;
-import p.lodz.tul.ApplicationPorts.service.UpdateAccountUseCase;
-import p.lodz.tul.RestAdapter.dto.AccountDTO;
-import p.lodz.tul.RestAdapter.mappers.AccountMapper;
-import p.lodz.tul.RestAdapter.mappers.LevelOfAccessMapper;
-import p.lodz.tul.RestAdapter.util.ClientAccountDeserializer;
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.sun.istack.NotNull;
 import lombok.extern.java.Log;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import p.lodz.tul.ApplicationPorts.service.CreateAccountUseCase;
+import p.lodz.tul.ApplicationPorts.service.GetAccountsUseCase;
+import p.lodz.tul.ApplicationPorts.service.RemoveAccountUseCase;
+import p.lodz.tul.ApplicationPorts.service.UpdateAccountUseCase;
+import p.lodz.tul.restadapter.dto.AccountDTO;
+import p.lodz.tul.restadapter.mappers.AccountMapper;
+import p.lodz.tul.restadapter.mappers.LevelOfAccessMapper;
+import p.lodz.tul.restadapter.util.ClientAccountDeserializer;
 
+import java.util.List;
 import java.util.stream.Collectors;
 
 import static org.springframework.http.HttpStatus.*;
@@ -41,7 +41,7 @@ public class AccountController {
     }
 
     @PostMapping(value = "/account", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> registerClient(@NotNull JSONObject accountDtoJson) {
+    public ResponseEntity<Void> registerClient(JSONObject accountDtoJson) {
         AccountDTO accountDTO;
 
         try {
@@ -71,7 +71,7 @@ public class AccountController {
     }
 
     @GetMapping(value = "{accountLogin}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> accountByLogin(@PathVariable("accountLogin") String accountLogin) {
+    public ResponseEntity<AccountDTO> accountByLogin(@PathVariable("accountLogin") String accountLogin) {
         try {
             return ResponseEntity.ok(AccountMapper.toAccountDTO(getAccountsUseCase.getAccount(accountLogin)));
         } catch (Exception e) {
@@ -80,7 +80,7 @@ public class AccountController {
     }
 
     @GetMapping(value = "/all", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> allAccounts() {
+    public ResponseEntity<List<AccountDTO>> allAccounts() {
         try {
             return ResponseEntity.ok(
                     getAccountsUseCase.getAllAccounts().stream()
@@ -92,7 +92,7 @@ public class AccountController {
     }
 
     @DeleteMapping("{accountLogin}")
-    public ResponseEntity<?> removeAccount(@PathVariable("accountLogin") String accountLogin) {
+    public ResponseEntity<Void> removeAccount(@PathVariable("accountLogin") String accountLogin) {
         try {
             removeAccountUseCase.removeAccount(accountLogin);
             return ResponseEntity.status(CREATED).build();
@@ -102,7 +102,7 @@ public class AccountController {
     }
 
     @PutMapping(value = "/account", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> updateAccount(@NotNull JSONObject accountDtoJson) {
+    public ResponseEntity<Void> updateAccount(JSONObject accountDtoJson) {
         AccountDTO accountDTO;
 
         try {

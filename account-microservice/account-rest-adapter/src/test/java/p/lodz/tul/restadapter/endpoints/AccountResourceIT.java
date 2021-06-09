@@ -1,8 +1,8 @@
-package p.lodz.tul.RestAdapter.endpoints;
+package p.lodz.tul.restadapter.endpoints;
 
-import p.lodz.tul.RestAdapter.dto.AccountDTO;
-import p.lodz.tul.RestAdapter.dto.AddressDTO;
-import p.lodz.tul.RestAdapter.dto.accessLevels.ClientDTO;
+import p.lodz.tul.restadapter.dto.AccountDTO;
+import p.lodz.tul.restadapter.dto.AddressDTO;
+import p.lodz.tul.restadapter.dto.accessLevels.ClientDTO;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.restassured.response.Response;

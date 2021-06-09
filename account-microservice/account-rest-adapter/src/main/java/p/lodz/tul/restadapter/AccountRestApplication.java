@@ -1,4 +1,4 @@
-package p.lodz.tul.RestAdapter;
+package p.lodz.tul.restadapter;
 
 import org.springframework.amqp.rabbit.annotation.EnableRabbit;
 import org.springframework.boot.SpringApplication;
