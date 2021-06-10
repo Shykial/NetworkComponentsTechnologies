@@ -3,7 +3,7 @@ package p.lodz.tul.restadapter.mappers.accesslevels;
 import p.lodz.tul.domainmodel.entities.Address;
 import p.lodz.tul.domainmodel.entities.accesslevels.Client;
 import p.lodz.tul.restadapter.dto.AddressDTO;
-import p.lodz.tul.restadapter.dto.accessLevels.ClientDTO;
+import p.lodz.tul.restadapter.dto.accesslevels.ClientDTO;
 import p.lodz.tul.restadapter.mappers.AddressMapper;
 import org.junit.jupiter.api.Test;
 

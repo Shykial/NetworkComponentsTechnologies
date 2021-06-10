@@ -1,17 +1,19 @@
-package p.lodz.tul.restadapter.dto.accessLevels;
+package p.lodz.tul.restadapter.dto.accesslevels;
 
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import p.lodz.tul.restadapter.dto.AddressDTO;
 import p.lodz.tul.restadapter.dto.LevelOfAccessDTO;
-import lombok.Getter;
-import lombok.Setter;
 
 import java.io.Serializable;
 import java.util.Objects;
 
 @Getter
+@Setter
+@NoArgsConstructor
 public class ClientDTO extends LevelOfAccessDTO implements Serializable {
 
-    @Setter
     private Long id;
 
     private String firstName;
@@ -22,7 +24,7 @@ public class ClientDTO extends LevelOfAccessDTO implements Serializable {
 
     private double amountOfMoney;
 
-    public ClientDTO(String firstName,String lastName,  AddressDTO addressDTO, double amountOfMoney) {
+    public ClientDTO(String firstName, String lastName, AddressDTO addressDTO, double amountOfMoney) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.addressDTO = addressDTO;

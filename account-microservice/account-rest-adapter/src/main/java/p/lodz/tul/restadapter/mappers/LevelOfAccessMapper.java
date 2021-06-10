@@ -4,8 +4,8 @@ import p.lodz.tul.domainmodel.entities.LevelOfAccess;
 import p.lodz.tul.domainmodel.entities.accesslevels.Admin;
 import p.lodz.tul.domainmodel.entities.accesslevels.Client;
 import p.lodz.tul.restadapter.dto.LevelOfAccessDTO;
-import p.lodz.tul.restadapter.dto.accessLevels.AdminDTO;
-import p.lodz.tul.restadapter.dto.accessLevels.ClientDTO;
+import p.lodz.tul.restadapter.dto.accesslevels.AdminDTO;
+import p.lodz.tul.restadapter.dto.accesslevels.ClientDTO;
 import p.lodz.tul.restadapter.mappers.accesslevels.AdminMapper;
 import p.lodz.tul.restadapter.mappers.accesslevels.ClientMapper;
 

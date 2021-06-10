@@ -1,18 +1,20 @@
-package p.lodz.tul.restadapter.dto.accessLevels;
+package p.lodz.tul.restadapter.dto.accesslevels;
 
-import p.lodz.tul.restadapter.dto.LevelOfAccessDTO;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
+import p.lodz.tul.restadapter.dto.LevelOfAccessDTO;
 
 import java.io.Serializable;
 import java.util.Objects;
 
+@Getter
+@Setter
+@NoArgsConstructor
 public class AdminDTO extends LevelOfAccessDTO implements Serializable {
 
-    @Setter
     private Long id;
-    @Getter
-    private final String adminCode;
+    private String adminCode;
 
     public AdminDTO(String adminCode) {
         this.adminCode = adminCode;

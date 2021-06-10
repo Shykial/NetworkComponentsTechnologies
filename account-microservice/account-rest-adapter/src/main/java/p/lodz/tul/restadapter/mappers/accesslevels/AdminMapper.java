@@ -1,7 +1,7 @@
 package p.lodz.tul.restadapter.mappers.accesslevels;
 
 import p.lodz.tul.domainmodel.entities.accesslevels.Admin;
-import p.lodz.tul.restadapter.dto.accessLevels.AdminDTO;
+import p.lodz.tul.restadapter.dto.accesslevels.AdminDTO;
 
 public class AdminMapper {
 

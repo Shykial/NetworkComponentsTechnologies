@@ -2,7 +2,8 @@ package p.lodz.tul.restadapter.endpoints;
 
 import p.lodz.tul.restadapter.dto.AccountDTO;
 import p.lodz.tul.restadapter.dto.AddressDTO;
-import p.lodz.tul.restadapter.dto.accessLevels.ClientDTO;
+import p.lodz.tul.restadapter.dto.accesslevels.AdminDTO;
+import p.lodz.tul.restadapter.dto.accesslevels.ClientDTO;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.restassured.response.Response;
@@ -38,6 +39,16 @@ class AccountResourceIT {
         response = given().get("http://localhost:8080/car-rent/api/accounts/" + account.getLogin());
 
         assertEquals(200, response.getStatusCode());
+    }
+
+    @Test
+    void mappingTest() throws JsonProcessingException {
+        AccountDTO account = getRandomLoginAccount();
+        AccountDTO adminAccount = new AccountDTO("asdfaf", "asdfadsf", "asdfads", true, new AdminDTO("asdfasd"));
+        String json = objectMapper.writeValueAsString(account);
+        String adminJson = objectMapper.writeValueAsString(adminAccount);
+        AccountDTO accountTwo = objectMapper.readValue(json, AccountDTO.class);
+        AccountDTO adminAccountTwo = objectMapper.readValue(adminJson, AccountDTO.class);
     }
 
     @Test

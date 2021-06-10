@@ -2,9 +2,6 @@ package p.lodz.tul.restadapter.endpoints;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.java.Log;
-import org.json.JSONObject;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -15,7 +12,7 @@ import p.lodz.tul.ApplicationPorts.service.UpdateAccountUseCase;
 import p.lodz.tul.restadapter.dto.AccountDTO;
 import p.lodz.tul.restadapter.mappers.AccountMapper;
 import p.lodz.tul.restadapter.mappers.LevelOfAccessMapper;
-import p.lodz.tul.restadapter.mq.StatefulBlockingClient;
+import p.lodz.tul.restadapter.mq.Publisher;
 import p.lodz.tul.restadapter.util.ClientAccountDeserializer;
 
 import java.util.List;
@@ -33,14 +30,11 @@ public class AccountController {
     private final UpdateAccountUseCase updateAccountUseCase;
     private final RemoveAccountUseCase removeAccountUseCase;
     private final ClientAccountDeserializer jsonDeserializer;
-    private final StatefulBlockingClient client;
-    
+    private final Publisher client;
+
 
     @PostMapping(value = "/account", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Void> registerClient(JSONObject accountDtoJson) {
-        AccountDTO accountDTO;
-
-        accountDTO = jsonDeserializer.fromJson(accountDtoJson);
+    public ResponseEntity<Void> registerClient(@RequestBody AccountDTO accountDTO) {
 
         if (areAccountPropertiesNull(accountDTO)) {
             return ResponseEntity.status(EXPECTATION_FAILED).build();
@@ -52,11 +46,11 @@ public class AccountController {
                 accountDTO.getPassword(),
                 LevelOfAccessMapper.toLevelOfAccess(accountDTO.getLevelOfAccess())
         );
-        
+
         if (!client.send("create", accountDTO)) {
             return ResponseEntity.status(CONFLICT).build();
         }
-        
+
         return ResponseEntity.status(CREATED).build();
     }
 
@@ -102,21 +96,18 @@ public class AccountController {
     }
 
     @PutMapping(value = "/account", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Void> updateAccount(JSONObject accountDtoJson) {
-        AccountDTO accountDTO;
-
-        accountDTO = jsonDeserializer.fromJson(accountDtoJson);
+    public ResponseEntity<Void> updateAccount(@RequestBody AccountDTO accountDTO) {
 
         if (areAccountPropertiesNull(accountDTO)) {
             return ResponseEntity.status(EXPECTATION_FAILED).build();
         }
-        
+
         if (!client.send("update", accountDTO)) {
             return ResponseEntity.status(NOT_ACCEPTABLE).build();
         }
 
         updateAccountUseCase.updateAccount(AccountMapper.toAccount(accountDTO));
-        return ResponseEntity.ok().build();
+        return ResponseEntity.noContent().build();
     }
 }
 

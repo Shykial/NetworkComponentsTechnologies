@@ -5,7 +5,7 @@ import p.lodz.tul.domainmodel.entities.Address;
 import p.lodz.tul.domainmodel.entities.LevelOfAccess;
 import p.lodz.tul.domainmodel.entities.accesslevels.Client;
 import p.lodz.tul.restadapter.dto.LevelOfAccessDTO;
-import p.lodz.tul.restadapter.dto.accessLevels.AdminDTO;
+import p.lodz.tul.restadapter.dto.accesslevels.AdminDTO;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;

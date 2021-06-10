@@ -8,7 +8,7 @@ import java.util.Objects;
 
 @Data
 @AllArgsConstructor
-public class AccountDTO implements Serializable {
+public class ClientDTO implements Serializable {
 
     private final String email;
     private final String login;
@@ -19,7 +19,7 @@ public class AccountDTO implements Serializable {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        AccountDTO that = (AccountDTO) o;
+        ClientDTO that = (ClientDTO) o;
         return login.equals(that.login);
     }
 

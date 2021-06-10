@@ -5,7 +5,7 @@ import p.lodz.tul.domainmodel.exceptions.AccountException;
 
 import java.util.List;
 
-public interface GetAccountsUseCase {
+public interface GetClientsUseCase {
     Client getClient(String login) throws AccountException;
 
     List<Client> getAllClients();

@@ -7,7 +7,7 @@ import io.restassured.specification.RequestSpecification;
 import lombok.SneakyThrows;
 import org.json.JSONObject;
 import org.junit.jupiter.api.Test;
-import p.lodz.tul.restadapter.dto.AccountDTO;
+import p.lodz.tul.restadapter.dto.ClientDTO;
 import p.lodz.tul.restadapter.dto.CarDTO;
 import p.lodz.tul.restadapter.dto.RentDTO;
 
@@ -119,8 +119,8 @@ class RentResourceIT {
                 .endDate(LocalDateTime.now()).build();
     }
 
-    private AccountDTO getRandomLoginAccount() {
-        return new AccountDTO("michal@gmail.com", randomAlphanumeric(8), true, 9999999.12);
+    private ClientDTO getRandomLoginAccount() {
+        return new ClientDTO("michal@gmail.com", randomAlphanumeric(8), true, 9999999.12);
     }
 
     private CarDTO getRandomVinVehicle() {
@@ -139,7 +139,7 @@ class RentResourceIT {
     }
 
     @SneakyThrows
-    private void registerClient(AccountDTO account) {
+    private void registerClient(ClientDTO account) {
         RequestSpecification request = given();
         request.contentType(ContentType.JSON);
         request.body(objectMapper.writeValueAsString(account));

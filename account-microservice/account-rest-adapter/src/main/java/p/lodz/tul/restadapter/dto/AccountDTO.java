@@ -1,6 +1,6 @@
 package p.lodz.tul.restadapter.dto;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -9,25 +9,24 @@ import lombok.Setter;
 import java.io.Serializable;
 import java.util.Objects;
 
+import static com.fasterxml.jackson.annotation.JsonProperty.Access.WRITE_ONLY;
+
 @Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 public class AccountDTO implements Serializable {
-    @Setter
     private String email;
 
-    @Setter
     private String login;
 
-    @Setter
-    @JsonIgnore
+    @JsonProperty(access = WRITE_ONLY)
     private String password;
 
-    @Setter
     private boolean active;
 
-    @Setter
     private LevelOfAccessDTO levelOfAccess;
+
 
     @Override
     public boolean equals(Object o) {

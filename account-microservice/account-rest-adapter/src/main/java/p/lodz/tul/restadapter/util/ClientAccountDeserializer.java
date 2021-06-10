@@ -6,7 +6,7 @@ import org.json.JSONObject;
 import org.springframework.stereotype.Component;
 import p.lodz.tul.restadapter.dto.AccountDTO;
 import p.lodz.tul.restadapter.dto.AddressDTO;
-import p.lodz.tul.restadapter.dto.accessLevels.ClientDTO;
+import p.lodz.tul.restadapter.dto.accesslevels.ClientDTO;
 
 import javax.annotation.PostConstruct;
 import java.io.Serializable;

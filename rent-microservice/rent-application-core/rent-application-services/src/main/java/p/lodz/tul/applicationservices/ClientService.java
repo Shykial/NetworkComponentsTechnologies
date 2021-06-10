@@ -3,16 +3,16 @@ package p.lodz.tul.applicationservices;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import p.lodz.tul.applicationports.repo.ClientRepositoryPort;
-import p.lodz.tul.applicationports.service.CreateAccountUseCase;
-import p.lodz.tul.applicationports.service.GetAccountsUseCase;
-import p.lodz.tul.applicationports.service.UpdateAccountUseCase;
+import p.lodz.tul.applicationports.service.CreateClientUseCase;
+import p.lodz.tul.applicationports.service.GetClientsUseCase;
+import p.lodz.tul.applicationports.service.UpdateClientUseCase;
 import p.lodz.tul.domainmodel.entities.Client;
 import p.lodz.tul.domainmodel.exceptions.AccountException;
 
 import java.util.List;
 
 @Service
-public class ClientService implements CreateAccountUseCase, UpdateAccountUseCase, GetAccountsUseCase {
+public class ClientService implements CreateClientUseCase, UpdateClientUseCase, GetClientsUseCase {
     private final ClientRepositoryPort clientRepositoryPort;
 
     @Autowired
@@ -21,7 +21,7 @@ public class ClientService implements CreateAccountUseCase, UpdateAccountUseCase
     }
 
     @Override
-    public Client createAccount(String email, String login, boolean active, double amountOfMoney) throws AccountException {
+    public Client createClient(String email, String login, boolean active, double amountOfMoney) throws AccountException {
         Client client = new Client(email, login, active, amountOfMoney);
         clientRepositoryPort.addClient(client);
         return client;

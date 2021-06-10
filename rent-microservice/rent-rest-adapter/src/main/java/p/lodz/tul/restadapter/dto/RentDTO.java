@@ -18,7 +18,7 @@ public class RentDTO implements Serializable {
     //    @Setter
     private final UUID uuid;
 
-    private final AccountDTO accountDTO;
+    private final ClientDTO accountDTO;
 
     private final CarDTO carDTO;
 

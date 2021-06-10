@@ -10,7 +10,7 @@ import p.lodz.tul.applicationports.service.EndRentUseCase;
 import p.lodz.tul.applicationports.service.GetRentsUseCase;
 import p.lodz.tul.applicationports.service.UpdateRentUseCase;
 import p.lodz.tul.restadapter.dto.RentDTO;
-import p.lodz.tul.restadapter.mappers.AccountMapper;
+import p.lodz.tul.restadapter.mappers.ClientMapper;
 import p.lodz.tul.restadapter.mappers.CarMapper;
 import p.lodz.tul.restadapter.mappers.RentMapper;
 
@@ -110,21 +110,21 @@ public class RentController {
 
     private UUID createNotStartedRentAndGetUUID(RentDTO rent) {
         return createRentUseCase.createRent(
-                AccountMapper.toAccount(rent.getAccountDTO()),
+                ClientMapper.toClient(rent.getAccountDTO()),
                 CarMapper.toCar(rent.getCarDTO())
         ).getUuid();
     }
 
     private UUID createStartedRentAndGetUUID(RentDTO rent) {
         return createRentUseCase.createRent(
-                AccountMapper.toAccount(rent.getAccountDTO()),
+                ClientMapper.toClient(rent.getAccountDTO()),
                 CarMapper.toCar(rent.getCarDTO()), rent.getStartDate()
         ).getUuid();
     }
 
     private UUID createFinishedRentAndGetUUID(RentDTO rent) {
         return createRentUseCase.createRent(
-                AccountMapper.toAccount(rent.getAccountDTO()),
+                ClientMapper.toClient(rent.getAccountDTO()),
                 CarMapper.toCar(rent.getCarDTO()),
                 rent.getStartDate(), rent.getEndDate()
         ).getUuid();

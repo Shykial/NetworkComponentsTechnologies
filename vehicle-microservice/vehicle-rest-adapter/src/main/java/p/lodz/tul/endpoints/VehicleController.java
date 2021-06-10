@@ -7,7 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import p.lodz.tul.dto.VehicleDTO;
 import p.lodz.tul.mappers.VehicleMapper;
-import p.lodz.tul.mq.StatefulBlockingClient;
+import p.lodz.tul.mq.Publisher;
 import p.lodz.tul.service.CreateVehicleUseCase;
 import p.lodz.tul.service.GetVehiclesUseCase;
 import p.lodz.tul.service.RemoveVehicleUseCase;
@@ -25,7 +25,7 @@ public class VehicleController {
     private final UpdateVehicleUseCase updateVehicleUseCase;
     private final RemoveVehicleUseCase removeVehicleUseCase;
     private final GetVehiclesUseCase getVehiclesUseCase;
-    private final StatefulBlockingClient client;
+    private final Publisher client;
 
 
     @PostMapping(path = "/vehicle", consumes = MediaType.APPLICATION_JSON_VALUE)
