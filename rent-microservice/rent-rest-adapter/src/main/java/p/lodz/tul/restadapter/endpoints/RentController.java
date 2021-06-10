@@ -10,9 +10,10 @@ import p.lodz.tul.applicationports.service.EndRentUseCase;
 import p.lodz.tul.applicationports.service.GetRentsUseCase;
 import p.lodz.tul.applicationports.service.UpdateRentUseCase;
 import p.lodz.tul.restadapter.dto.RentDTO;
-import p.lodz.tul.restadapter.mappers.ClientMapper;
 import p.lodz.tul.restadapter.mappers.CarMapper;
+import p.lodz.tul.restadapter.mappers.ClientMapper;
 import p.lodz.tul.restadapter.mappers.RentMapper;
+import p.lodz.tul.restadapter.mq.Publisher;
 
 import java.util.List;
 import java.util.Map;
@@ -29,10 +30,11 @@ public class RentController {
     private final UpdateRentUseCase updateRentUseCase;
     private final GetRentsUseCase getRentsUseCase;
     private final EndRentUseCase endRentUseCase;
+    private final Publisher publisher;
 
     @PostMapping(value = "/rent", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.TEXT_PLAIN_VALUE)
     public ResponseEntity<String> addRent(RentDTO rent) {
-        if (rent.getAccountDTO() == null || rent.getCarDTO() == null) {
+        if (rent.getClientDTO() == null || rent.getCarDTO() == null) {
             return ResponseEntity.status(EXPECTATION_FAILED).build();
         }
 
@@ -46,6 +48,11 @@ public class RentController {
         } else {
             rentUUID = createFinishedRentAndGetUUID(rent);
         }
+
+        if (!publisher.send("updateClient", rent.getClientDTO())) {
+            return ResponseEntity.status(CONFLICT).build();
+        }
+
         return ResponseEntity.status(CREATED).body(rentUUID.toString());
     }
 
@@ -101,7 +108,7 @@ public class RentController {
         //wrapping values with JSONObject.wrap to avoid NPE and properly save null values
         return new JSONObject(Map.of(
                 "uuid", JSONObject.wrap(rent.getUuid()),
-                "account", JSONObject.wrap(rent.getAccountDTO().getLogin()),
+                "account", JSONObject.wrap(rent.getClientDTO().getLogin()),
                 "vehicle", JSONObject.wrap(rent.getCarDTO().getVin()),
                 "startDate", JSONObject.wrap(rent.getStartDate()),
                 "endDate", JSONObject.wrap(rent.getEndDate())
@@ -110,21 +117,21 @@ public class RentController {
 
     private UUID createNotStartedRentAndGetUUID(RentDTO rent) {
         return createRentUseCase.createRent(
-                ClientMapper.toClient(rent.getAccountDTO()),
+                ClientMapper.toClient(rent.getClientDTO()),
                 CarMapper.toCar(rent.getCarDTO())
         ).getUuid();
     }
 
     private UUID createStartedRentAndGetUUID(RentDTO rent) {
         return createRentUseCase.createRent(
-                ClientMapper.toClient(rent.getAccountDTO()),
+                ClientMapper.toClient(rent.getClientDTO()),
                 CarMapper.toCar(rent.getCarDTO()), rent.getStartDate()
         ).getUuid();
     }
 
     private UUID createFinishedRentAndGetUUID(RentDTO rent) {
         return createRentUseCase.createRent(
-                ClientMapper.toClient(rent.getAccountDTO()),
+                ClientMapper.toClient(rent.getClientDTO()),
                 CarMapper.toCar(rent.getCarDTO()),
                 rent.getStartDate(), rent.getEndDate()
         ).getUuid();

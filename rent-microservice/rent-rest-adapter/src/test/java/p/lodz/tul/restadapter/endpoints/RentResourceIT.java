@@ -30,13 +30,13 @@ class RentResourceIT {
     void addRentTest() {
         RentDTO rent = getRandomUUIDRent();
         JSONObject jsonObject = new JSONObject(Map.of(
-                "account", rent.getAccountDTO().getLogin(),
+                "account", rent.getClientDTO().getLogin(),
                 "vehicle", rent.getCarDTO().getVin(),
                 "startDate", rent.getStartDate(),
                 "endDate", rent.getEndDate()
         ));
 
-        registerClient(rent.getAccountDTO());
+        registerClient(rent.getClientDTO());
         registerVehicle(rent.getCarDTO());
 
         Response response = given().get("http://localhost:8080/car-rent/api/rents/" + rent.getUuid().toString());
@@ -69,7 +69,7 @@ class RentResourceIT {
     void updateRentTest() {
         RentDTO rent = getRandomUUIDRent();
         String rentUUID = registerRent(rent);
-        rent = new RentDTO(UUID.fromString(rentUUID), rent.getAccountDTO(), rent.getCarDTO(), rent.getStartDate(), rent.getEndDate());
+        rent = new RentDTO(UUID.fromString(rentUUID), rent.getClientDTO(), rent.getCarDTO(), rent.getStartDate(), rent.getEndDate());
 
         Response response = given().get("http://localhost:8080/car-rent/api/rents/" + rentUUID);
         assertEquals(rent.getEndDate(), LocalDateTime.parse(response.getBody().jsonPath().getString("endDate")));
@@ -92,7 +92,7 @@ class RentResourceIT {
         RentDTO rent = getRandomUUIDRent();
         rent.setEndDate(null);
         String rentUUID = registerRent(rent);
-        rent = new RentDTO(UUID.fromString(rentUUID), rent.getAccountDTO(), rent.getCarDTO(), rent.getStartDate(), rent.getEndDate());
+        rent = new RentDTO(UUID.fromString(rentUUID), rent.getClientDTO(), rent.getCarDTO(), rent.getStartDate(), rent.getEndDate());
         JSONObject rentJSONObject = getJSONFromRent(rent);
         rentJSONObject.remove("endDate"); //removing endDate as it will differ from outcome
 
@@ -113,7 +113,7 @@ class RentResourceIT {
     }
 
     private RentDTO getRandomUUIDRent() {
-        return RentDTO.builder().accountDTO(getRandomLoginAccount())
+        return RentDTO.builder().clientDTO(getRandomLoginAccount())
                 .carDTO(getRandomVinVehicle())
                 .startDate(LocalDate.parse("2020-12-12", dateTimeFormatter).atStartOfDay())
                 .endDate(LocalDateTime.now()).build();
@@ -130,7 +130,7 @@ class RentResourceIT {
     private String registerRent(RentDTO rent) {
         JSONObject jsonObject = getJSONFromRent(rent);
 
-        registerClient(rent.getAccountDTO());
+        registerClient(rent.getClientDTO());
         registerVehicle(rent.getCarDTO());
 
         Response response = given().contentType(ContentType.JSON).body(jsonObject.toString())
@@ -156,7 +156,7 @@ class RentResourceIT {
         //wrapping values with JSONObject.wrap to avoid NPE and properly save null values
         return new JSONObject(Map.of(
                 "uuid", JSONObject.wrap(rent.getUuid()),
-                "account", JSONObject.wrap(rent.getAccountDTO().getLogin()),
+                "account", JSONObject.wrap(rent.getClientDTO().getLogin()),
                 "vehicle", JSONObject.wrap(rent.getCarDTO().getVin()),
                 "startDate", JSONObject.wrap(rent.getStartDate()),
                 "endDate", JSONObject.wrap(rent.getEndDate())

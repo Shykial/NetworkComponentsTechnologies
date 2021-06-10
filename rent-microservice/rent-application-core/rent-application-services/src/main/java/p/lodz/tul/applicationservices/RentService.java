@@ -3,6 +3,7 @@ package p.lodz.tul.applicationservices;
 import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import p.lodz.tul.applicationports.repo.ClientRepositoryPort;
 import p.lodz.tul.applicationports.repo.RentRepositoryPort;
 import p.lodz.tul.applicationports.service.CreateRentUseCase;
 import p.lodz.tul.applicationports.service.EndRentUseCase;
@@ -23,9 +24,12 @@ public class RentService implements CreateRentUseCase, EndRentUseCase, UpdateRen
 
     private final RentRepositoryPort rentRepository;
 
+    private final ClientRepositoryPort clientRepositoryPort;
+
     @Autowired
-    public RentService(RentRepositoryPort rentRepository) {
+    public RentService(RentRepositoryPort rentRepository, ClientRepositoryPort clientRepositoryPort) {
         this.rentRepository = rentRepository;
+        this.clientRepositoryPort = clientRepositoryPort;
     }
 
     @SneakyThrows
@@ -149,7 +153,8 @@ public class RentService implements CreateRentUseCase, EndRentUseCase, UpdateRen
         Client client = rent.getAccount();
         double charge = calculateChargeForRental(rent);
 
-//        client.setAmountOfMoney(client.getAmountOfMoney() - charge);
+        client.setAmountOfMoney(client.getAmountOfMoney() - charge);
+        clientRepositoryPort.updateClient(client.getLogin(), client);
     }
 
     @SneakyThrows

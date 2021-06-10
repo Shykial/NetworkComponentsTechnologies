@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Test;
 import p.lodz.tul.domainmodel.entities.Car;
 import p.lodz.tul.domainmodel.entities.Client;
 import p.lodz.tul.domainmodel.entities.Rent;
+import p.lodz.tul.repositoryadapter.adapters.ClientListRepositoryAdapter;
 import p.lodz.tul.repositoryadapter.adapters.RentListRepositoryAdapter;
 
 import java.time.LocalDate;
@@ -57,7 +58,7 @@ class RentServiceIT {
 
     @BeforeEach
     void setUp() {
-        rentService = new RentService(new RentListRepositoryAdapter());
+        rentService = new RentService(new RentListRepositoryAdapter(), new ClientListRepositoryAdapter());
     }
 
     @Test

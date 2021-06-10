@@ -30,7 +30,7 @@ public class AccountController {
     private final UpdateAccountUseCase updateAccountUseCase;
     private final RemoveAccountUseCase removeAccountUseCase;
     private final ClientAccountDeserializer jsonDeserializer;
-    private final Publisher client;
+    private final Publisher publisher;
 
 
     @PostMapping(value = "/account", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
@@ -47,7 +47,7 @@ public class AccountController {
                 LevelOfAccessMapper.toLevelOfAccess(accountDTO.getLevelOfAccess())
         );
 
-        if (!client.send("create", accountDTO)) {
+        if (!publisher.send("create", accountDTO)) {
             return ResponseEntity.status(CONFLICT).build();
         }
 
@@ -86,7 +86,7 @@ public class AccountController {
     public ResponseEntity<Void> removeAccount(@PathVariable("accountLogin") String accountLogin) {
         try {
             removeAccountUseCase.removeAccount(accountLogin);
-            if (!client.send("remove", accountLogin)) {
+            if (!publisher.send("remove", accountLogin)) {
                 return ResponseEntity.status(NOT_ACCEPTABLE).build();
             }
             return ResponseEntity.status(CREATED).build();
@@ -102,11 +102,12 @@ public class AccountController {
             return ResponseEntity.status(EXPECTATION_FAILED).build();
         }
 
-        if (!client.send("update", accountDTO)) {
+        updateAccountUseCase.updateAccount(AccountMapper.toAccount(accountDTO));
+
+        if (!publisher.send("update", accountDTO)) {
             return ResponseEntity.status(NOT_ACCEPTABLE).build();
         }
 
-        updateAccountUseCase.updateAccount(AccountMapper.toAccount(accountDTO));
         return ResponseEntity.noContent().build();
     }
 }

@@ -28,7 +28,7 @@ class RentMapperTest {
         RentDTO rentDTO = new RentDTO(UUID.randomUUID(), accountDTO, carDTO, LocalDateTime.now(), null);
         Rent rent = RentMapper.toRent(rentDTO);
 
-        assertEquals(rentDTO.getAccountDTO(), ClientMapper.toClientDTO(rent.getAccount()));
+        assertEquals(rentDTO.getClientDTO(), ClientMapper.toClientDTO(rent.getAccount()));
         assertEquals(rentDTO.getCarDTO(), CarMapper.toCarDTO(rent.getVehicle()));
         assertEquals(rentDTO.getEndDate(), rent.getEndDate());
         assertEquals(rentDTO.getStartDate(), rent.getStartDate());
@@ -45,7 +45,7 @@ class RentMapperTest {
         RentDTO rentDTO = RentMapper.toRentDTO(rent);
 
         assertEquals(rent.getUuid(), rentDTO.getUuid());
-        assertEquals(rent.getAccount(), ClientMapper.toClient(rentDTO.getAccountDTO()));
+        assertEquals(rent.getAccount(), ClientMapper.toClient(rentDTO.getClientDTO()));
         assertEquals(rent.getVehicle(), CarMapper.toCar(rentDTO.getCarDTO()));
         assertEquals(rent.getEndDate(), rentDTO.getEndDate());
         assertEquals(rent.getStartDate(), rentDTO.getStartDate());

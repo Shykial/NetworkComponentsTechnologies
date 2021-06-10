@@ -4,8 +4,6 @@ import org.springframework.amqp.core.Binding;
 import org.springframework.amqp.core.BindingBuilder;
 import org.springframework.amqp.core.Queue;
 import org.springframework.amqp.core.TopicExchange;
-import org.springframework.amqp.support.converter.Jackson2JsonMessageConverter;
-import org.springframework.amqp.support.converter.MessageConverter;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -19,7 +17,7 @@ public class ConsumerConfiguration {
     public static final String ACCOUNT_QUEUE_NAME = "rent_account_queue";
 
     @Bean
-    public TopicExchange topicExchange() {
+    public TopicExchange rentTopicExchange() {
         return new TopicExchange(EXCHANGE);
     }
 
@@ -34,7 +32,7 @@ public class ConsumerConfiguration {
     }
 
     @Bean
-    public Binding vehicleBinding(TopicExchange topicExchange,
+    public Binding vehicleBinding(@Qualifier("rentTopicExchange") TopicExchange topicExchange,
                                   @Qualifier("vehicleQueue") Queue queue) {
         return BindingBuilder.bind(queue)
                 .to(topicExchange)
@@ -42,15 +40,11 @@ public class ConsumerConfiguration {
     }
 
     @Bean
-    public Binding accountBinding(TopicExchange topicExchange,
+    public Binding accountBinding(@Qualifier("rentTopicExchange") TopicExchange topicExchange,
                                   @Qualifier("accountQueue") Queue queue) {
         return BindingBuilder.bind(queue)
                 .to(topicExchange)
                 .with(ACCOUNT_BASE_ROUTING_KEY);
     }
 
-    @Bean
-    public MessageConverter jackson2MessageConverter() {
-        return new Jackson2JsonMessageConverter();
-    }
 }
